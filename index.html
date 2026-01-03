@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hospital Patient Management</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Hospital Patient Management</h2>
+
+<form id="patientForm">
+    <label>Patient Name:</label><br>
+    <input type="text" id="patientName" required><br>
+
+    <label>Age:</label><br>
+    <input type="number" id="patientAge" required><br>
+
+    <label>Disease / Symptoms:</label><br>
+    <input type="text" id="patientDisease" required><br>
+
+    <label>Select Date:</label><br>
+    <input type="date" id="appointmentDate" required><br>
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+<h3>Appointments</h3>
+<table id="appointmentsTable">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Age</th>
+            <th>Disease</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Token</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Appointments will appear here -->
+    </tbody>
+</table>
+
+<script src="script.js"></script>
+</body>
+</html>
