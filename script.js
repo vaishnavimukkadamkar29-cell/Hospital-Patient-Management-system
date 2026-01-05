@@ -29,30 +29,6 @@ doctors.forEach(d => {
 });
 
 /* =======================
-   DISEASE → SPECIALIZATION
-======================= */
-const diseaseMap = {
-    heart: "Cardiologist",
-    chest: "Cardiologist",
-    bp: "Cardiologist",
-
-    rash: "Dermatologist",
-    rashes: "Dermatologist",
-    skin: "Dermatologist",
-
-    fever: "General Physician",
-    cold: "General Physician",
-    pain: "General Physician",
-
-    bone: "Orthopedic",
-    fracture: "Orthopedic",
-
-    ear: "ENT",
-    nose: "ENT",
-    throat: "ENT"
-};
-
-/* =======================
    DATE FIX (NO PAST)
 ======================= */
 const dateInput = document.getElementById("appointmentDate");
@@ -69,18 +45,32 @@ function toAmPm(time) {
 }
 
 /* =======================
-   DOCTOR ASSIGN
+   DOCTOR ASSIGN (FIXED)
 ======================= */
 function assignDoctor(symptoms) {
-    symptoms = symptoms.toLowerCase();
-    for (let key in diseaseMap) {
-        if (symptoms.includes(key)) {
-            let spec = diseaseMap[key];
-            let availableDoctors = doctors.filter(d => d.spec === spec);
-            return availableDoctors[Math.floor(Math.random() * availableDoctors.length)];
-        }
+    const text = symptoms.toLowerCase();
+    let spec;
+
+    // PRIORITY-BASED TRIAGE
+    if (text.includes("chest") || text.includes("heart") || text.includes("bp")) {
+        spec = "Cardiologist";
     }
-    return doctors.find(d => d.spec === "General Physician");
+    else if (text.includes("rash") || text.includes("rashes") || text.includes("skin")) {
+        spec = "Dermatologist";
+    }
+    else if (text.includes("bone") || text.includes("fracture") || text.includes("joint")) {
+        spec = "Orthopedic";
+    }
+    else if (text.includes("ear") || text.includes("nose") || text.includes("throat")) {
+        spec = "ENT";
+    }
+    else {
+        // FALLBACK ONLY
+        spec = "General Physician";
+    }
+
+    const availableDoctors = doctors.filter(d => d.spec === spec);
+    return availableDoctors[Math.floor(Math.random() * availableDoctors.length)];
 }
 
 /* =======================
@@ -101,6 +91,7 @@ function getSlot(docId, date) {
 function render() {
     const tbody = document.getElementById("appointmentsTable");
     tbody.innerHTML = "";
+
     appointments.forEach(a => {
         tbody.innerHTML += `
         <tr>
